@@ -1,6 +1,8 @@
 ﻿# include <GL/glut.h> 
 # include <math.h>
 const GLfloat  PI = 3.14159265358979323846f;
+
+
 /* 初始化材料属性、光源属性、光照模型，打开深度缓冲区等 */
 void init(void)
 {
@@ -9,15 +11,17 @@ void init(void)
 	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };//环境光
 	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };//漫反射光
 	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };//镜面反射光
-	GLfloat mat_shininess[] = { 1000.0 };//设置材料反射指数
+	GLfloat mat_shininess[] = { 50.0 };//设置材料反射指数
+	GLfloat sun_mat_emission[] = { 0.3f, 0.0f, 0.0f, 1.0f };//定义材质的辐射广颜色，为偏红色
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, light_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	glMaterialfv(GL_FRONT, GL_EMISSION, sun_mat_emission);
 	glClearColor(0.0, 1.0, 1.0, 0.0); //设置背景色为青色
-	//glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_SMOOTH);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
@@ -70,10 +74,10 @@ void drawSphere(GLfloat xx, GLfloat yy, GLfloat zz, GLfloat radius, GLfloat M, G
 void display(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	drawSphere(0, 0, 0, 1, 50, 50);
-	//glutSolidSphere(1.0, 40, 50);    //半径为 1,40 条纬线,50 条经线
+	drawSphere(0, 0, 0, 0.8, 100, 100);
 	glFlush();
 }
+
 /* 定义 GLUT 的 reshape 函数，w、h 分别是输出图形的窗口的宽和高*/
 void reshape(int w, int h)
 {
@@ -92,16 +96,15 @@ void reshape(int w, int h)
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);     // GLUT 环境初始化
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH); // 显示模式初始化
-	glutInitWindowSize(800, 600);       // 定义窗口大小
+	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH); // 显示模式初始化
+	glutInitWindowSize(400, 400);       // 定义窗口大小
 	glutInitWindowPosition(100, 100);   // 定义窗口位置  
 	glutCreateWindow(argv[0]);   // 显示窗口,窗口标题为执行函数名
 	init();
+	glutSetWindowTitle("真实感图形");
 	glutDisplayFunc(display); 	// 注册 OpenGL 绘图函数(一种特殊的调用方式,下同) 
 	glutReshapeFunc(reshape);   // 注册窗口大小改变时的响应函数
 	glutMainLoop();      // 进入 GLUT 消息循环，开始执行程序
 	return 0;
+	// http://www.noobyard.com/article/p-zwctpzfl-gr.html
 }
-
-
-// http://www.noobyard.com/article/p-zwctpzfl-gr.html
