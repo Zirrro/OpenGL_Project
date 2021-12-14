@@ -12,7 +12,7 @@ void init(void)
 	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };//漫反射光
 	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };//镜面反射光
 	GLfloat mat_shininess[] = { 50.0 };//设置材料反射指数
-	GLfloat sun_mat_emission[] = { 0.3f, 0.0f, 0.0f, 1.0f };//定义材质的辐射广颜色，为偏红色
+	GLfloat sun_mat_emission[] = { 0.0f, 0.1f, 0.1f, 1.0f };//定义材质的辐射广颜色，为偏红色
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
